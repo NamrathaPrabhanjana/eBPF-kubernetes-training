@@ -29,5 +29,6 @@ RUN	bash -xc "make ; \
 	sudo make install ;"
 
 # for bpftool
-RUN sudo apt install -y linux-tools-5.4.0-196-generic  linux-headers-$(uname -r)
+RUN sudo apt install -y linux-tools-$(uname -r)
+RUN sudo apt-get install -y linux-headers-$(uname -r)
 RUN sudo apt install -y net-tools conntrack systemd

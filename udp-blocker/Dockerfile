@@ -6,5 +6,5 @@ WORKDIR /
 COPY udp_blocker_xdp.py .
 COPY udp_blocker_xdp.c .
 
-CMD ["python3", "udp_blocker_xdp.py"]
+ENTRYPOINT python3 udp_blocker_xdp.py
 

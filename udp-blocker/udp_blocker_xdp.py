@@ -10,7 +10,7 @@ b = BPF(src_file="udp_blocker_xdp.c")
 interface = "lo"
 
 # xdp will be hit when a packet arrives on the interface
-fx = b.load_func("udp_blocker_xdp.c", BPF.XDP)
+fx = b.load_func("xdp_udp_blocker", BPF.XDP)
 BPF.attach_xdp(interface, fx, 0)
 
 try:

@@ -33,7 +33,7 @@ int xdp_udp_blocker(struct xdp_md *ctx)
 {
     unsigned char protocol = lookup_protocol(ctx);
     if (protocol == UDP_PROTOCOL) {
-        bpf_printk("Dropping UDP packet\n");
+        bpf_trace_printk("Dropping UDP packet\n");
         return XDP_DROP;
     }
     return XDP_PASS;
