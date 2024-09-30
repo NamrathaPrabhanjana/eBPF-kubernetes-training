@@ -16,17 +16,17 @@ RUN sudo apt install -y zip bison build-essential cmake flex git libedit-dev \
 WORKDIR /
 # for bcc headers, bcc tools, python bcc
 RUN	bash -xc " 
-	git clone https://github.com/iovisor/bcc.git 	; \
-	mkdir bcc/build && cd bcc/build 				; \
-	cmake .. 										; \
-	make 											; \
-	sudo make install 								; \
-	cmake -DPYTHON_CMD=python3 .. 					;"
+	git clone https://github.com/iovisor/bcc.git ; \
+	mkdir bcc/build && cd bcc/build ; \
+	cmake .. ; \
+	make ; \
+	sudo make install ; \
+	cmake -DPYTHON_CMD=python3 .. ;"
 
 #build python deps
 WORKDIR /bcc/build/src/python
-RUN	bash -xc "make		; \
-	sudo make install	;"
+RUN	bash -xc "make ; \
+	sudo make install ;"
 
 # for bpftool
 RUN sudo apt install -y linux-tools-5.4.0-196-generic

@@ -1,8 +1,5 @@
-FROM ubuntu:20.04 as base_os
+FROM ebpf-base-ctr:1.0 as base_os
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt install -y sudo vim bpfcc-tools python3
-RUN apt-get install -y linux-headers-$(uname -r)
-RUN apt-get install -y clang llvm libelf-dev libbpf-dev libbpfcc-dev
 
 WORKDIR /
 
