@@ -15,7 +15,7 @@ RUN sudo apt install -y zip bison build-essential cmake flex git libedit-dev \
 
 WORKDIR /
 # for bcc headers, bcc tools, python bcc
-RUN	bash -xc " 
+RUN	bash -xc " \
 	git clone https://github.com/iovisor/bcc.git ; \
 	mkdir bcc/build && cd bcc/build ; \
 	cmake .. ; \

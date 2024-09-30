@@ -62,3 +62,19 @@ Base container with all eBPF dependencies
 - docker save ebpf-base-ctr:1.0 > ebpf_base_ctr_1_0.tar
 - microk8s ctr image import ebpf_base_ctr_1_0.tar
 - microk8s ctr image ls
+
+
+Test container 
+--------------
+
+Follow README in helloworld folder
+
+
+Sample traffic filter/blocker
+----------------------------
+
+Follow README in udp-blocker-xdp folder
+
+
+
+
