@@ -14,6 +14,9 @@
   - Ensure pod is running well
     - microk8s kubectl logs <podname>
     - microk8s kubectl describe pod <podname>
+  - View the attached bpf program and map contents
+    - bpftool prog list
+    - bpftool prog map dump id <>
   - To delete pod (it'd get restarted again)
     - microk8s kubectl delete pod <podname>
   - To delete pod (and make it unschedulable again)
