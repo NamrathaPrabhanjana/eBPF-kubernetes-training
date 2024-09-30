@@ -1,0 +1,24 @@
+
+- Setup a simple ebpf traffic filter pod to deploy on the kube cluster (from udp-blocker folder)
+  - Setup container
+    - Build: docker build . -t udp-blocker-xdp:1.0 (with Dockerfile in udp-blocker folder)
+    - Execute: docker run -u root -v /sys/kernel/debug:/sys/kernel/debug:Z --privileged -it udp-blocker-xdp:1.0 bash
+    - Execute the bpf program within the container: ./udp-blocker-xdp.py (python3 udp-blocker-xdp.py)
+  - Copy the created container to microk8s' registry
+    - docker save udp-blocker-xdp:1.0 > udp-blocker-xdp-1-0.tar 
+    - microk8s ctr image import udp-blocker-xdp.tar
+    - microk8s ctr image ls
+  - Setup pod (with the above container) as a daemonset
+    - microk8s kubectl apply -f udp-blocker-xdp-deployment.yml
+    - microk8s kubectl get pods
+  - Ensure pod is running well
+    - microk8s kubectl logs <podname>
+    - microk8s kubectl describe pod <podname>
+  - View the attached bpf program and map contents
+    - bpftool prog list
+    - bpftool prog map dump id <>
+  - To delete pod (it'd get restarted again)
+    - microk8s kubectl delete pod <podname>
+  - To delete pod (and make it unschedulable again)
+    - microk8s kubectl delete -f udp-blocker-xdp-deployment.yml
+
