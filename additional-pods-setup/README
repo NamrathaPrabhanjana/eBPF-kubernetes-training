@@ -1,3 +1,6 @@
+Reference test case: https://isovalent.com/blog/post/tutorial-cilium-network-policy/#user-story-1-lockdown-the-database-allow-ingress-only-from-the-backend
+
+
 Reference: https://raw.githubusercontent.com/networkpolicy/demos/main/blog-1/demo.yaml
 - Deploy the frontend, backend and database pods
 - microk8s kubectl apply -f backend-deployment.yml
