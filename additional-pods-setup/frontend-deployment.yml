@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app.kubernetes.io/name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+      tier: frontend
+
+  template:
+    metadata:
+      labels:
+        app: demo
+        tier: frontend
+        app.kubernetes.io/name: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+      - name: udp-blocker-tool
+        image: udp-blocker:1.0
+        imagePullPolicy: Never # always pull from local microk8s repo; without this line, it will connect to dockerhub
+        securityContext:
+          privileged: true # run ctr in privileged mode for bpf programs to execute
+        volumeMounts:
+          - name: varlog
+            mountPath: /var/log
+          - name: debuglog
+            mountPath: /sys/kernel/debug
+          - name: sysfsbpf
+            mountPath: /sys/fs/bpf
+          - name: libmodules
+            mountPath: /lib/modules
+            # insert run cmd if you wish to
+      volumes:
+        - name: varlog
+          hostPath:
+            path: /var/log # generic kernel logs 
+        - name: debuglog
+          hostPath:
+            path: /sys/kernel/debug # this is needed for tracing
+        - name: sysfsbpf
+          hostPath:
+            path: /sys/fs/bpf # bpf programs mounted here
+        - name: libmodules
+          hostPath:
+            path: /lib/modules # for common kernel headers shared between ctr and host
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app.kubernetes.io/name: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: demo
+    tier: frontend

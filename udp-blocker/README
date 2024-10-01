@@ -17,6 +17,10 @@
   - View the attached bpf program and map contents
     - bpftool prog list
     - bpftool prog map dump id <>
+  - Send curl requests to the frontend service: 
+    curl http://localhost:<port>
+    Send udp requests to the frontend service:
+    nc -u localhost <port>
   - To delete pod (it'd get restarted again)
     - microk8s kubectl delete pod <podname>
   - To delete pod (and make it unschedulable again)

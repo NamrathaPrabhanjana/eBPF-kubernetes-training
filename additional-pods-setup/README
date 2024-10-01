@@ -1,0 +1,5 @@
+- Deploy the frontend, backend and database pods
+- microk8s kubectl apply -f backend-deployment.yml
+- microk8s kubectl apply -f frontend-deployment.yml
+- microk8s kubectl apply -f database-deployment.yml
+- microk8s kubectl get pods --all-namespaces
