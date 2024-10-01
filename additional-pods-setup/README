@@ -1,3 +1,4 @@
+Reference: https://raw.githubusercontent.com/networkpolicy/demos/main/blog-1/demo.yaml
 - Deploy the frontend, backend and database pods
 - microk8s kubectl apply -f backend-deployment.yml
 - microk8s kubectl apply -f frontend-deployment.yml
