@@ -21,7 +21,8 @@ spec:
       containers:
       - name: redis
         image:  docker.io/nicolas/webdis:0.1.22
- ---
+---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -36,3 +37,4 @@ spec:
   selector:
     app: demo
     tier: database
+

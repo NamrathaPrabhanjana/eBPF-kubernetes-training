@@ -23,54 +23,6 @@ spec:
         image: quay.io/cilium/json-mock
 
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: frontend
-  labels:
-    app.kubernetes.io/name: frontend
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: demo
-      tier: frontend
-
-  template:
-    metadata:
-      labels:
-        app: demo
-        tier: frontend
-        app.kubernetes.io/name: frontend
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:alpine
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: database
-  labels:
-    app.kubernetes.io/name: database
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: demo
-      tier: database
-
-  template:
-    metadata:
-      labels:
-        app: demo
-        tier: database
-        app.kubernetes.io/name: database
-    spec:
-      containers:
-      - name: redis
-        image:  docker.io/nicolas/webdis:0.1.22
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -86,31 +38,3 @@ spec:
     tier: backend
 
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-  labels:
-    app.kubernetes.io/name: frontend
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-  selector:
-    app: demo
-    tier: frontend
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: database
-  labels:
-    app.kubernetes.io/name: database
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: 7379
-  selector:
-    app: demo
-    tier: database
