@@ -31,4 +31,9 @@ RUN	bash -xc "make ; \
 # for bpftool
 RUN sudo apt install -y linux-tools-$(uname -r)
 RUN sudo apt-get install -y linux-headers-$(uname -r)
+
+# Lua JIT
+RUN sudo apt-get install -y luajit luajit-5.1-dev
+
 RUN sudo apt install -y net-tools conntrack systemd
+

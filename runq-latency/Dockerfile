@@ -6,4 +6,4 @@ WORKDIR /
 COPY runq_latency.py .
 COPY runq_latency.c .
 
-ENTRYPOINT python3 runq_latency.py
+#ENTRYPOINT python3 runq_latency.py

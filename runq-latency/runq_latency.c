@@ -1,5 +1,6 @@
 #include <linux/types.h>
-#include <uapi/linux.bpf.h>
+#include <uapi/linux/bpf.h>
+#include <linux/sched.h>
 
 struct data_t {
 	u32 pid;
