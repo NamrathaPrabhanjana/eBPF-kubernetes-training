@@ -1,3 +1,5 @@
+Test case reference: https://isovalent.com/blog/post/tutorial-cilium-network-policy/#user-story-1-lockdown-the-database-allow-ingress-only-from-the-backend
+
 1. Enable cilium in your k8s cluster:
    - git config --global --add safe.directory /snap/microk8s/current/addons/community/.git
    - microk8s enable community

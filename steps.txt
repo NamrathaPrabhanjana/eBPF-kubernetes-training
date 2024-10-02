@@ -75,6 +75,10 @@ Test container
 
 Follow README in helloworld folder
 
+Set up helper pods
+-------------------
+
+Follow README in additional-pods-setup folder
 
 Sample traffic filter/blocker
 ----------------------------
