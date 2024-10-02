@@ -18,4 +18,7 @@ Test case reference: https://isovalent.com/blog/post/tutorial-cilium-network-pol
 4. Enable ingress-only policy on database pod
    - microk8s kubectl apply -f database-ingress-only-policy.yml 
 
+5. View the cilium objects hoooked to each attachment point
+   - microk8s kubectl -n kube-system exec cilium-92mjm -it -- bpftool net list
+   - microk8s kubectl -n kube-system exec cilium-92mjm -it -- bpftool net show dev cilium_vxlan
 
