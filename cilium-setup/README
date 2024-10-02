@@ -1,0 +1,19 @@
+1. Enable cilium in your k8s cluster:
+   - git config --global --add safe.directory /snap/microk8s/current/addons/community/.git
+   - microk8s enable community
+   - microk8s enable cilium
+   - sudo microk8s cilium hubble enable
+   - microk8s cilium status
+   - microk8s cilium version
+   - microk8s kubectl get pods --all-namespaces
+
+2. Observe traffic flows within the cilium agent pod
+   - microk8s kubectl -n kube-system exec cilium-92mjm -it -- hubble observe
+
+3. Observe that the database pod is ping-able
+   - microk8s kubectl exec backend-667b84d68d-mflfl -- curl -s database/PING
+
+4. Enable ingress-only policy on database pod
+   - microk8s kubectl apply -f database-ingress-only-policy.yml 
+
+
