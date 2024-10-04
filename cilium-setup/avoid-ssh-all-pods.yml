@@ -1,0 +1,15 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-ssh-to-frontend
+  namespace: default
+spec:
+  ingress: 
+    - fromServices:
+        - k8sServiceSelector:
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: frontend 
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: database

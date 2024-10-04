@@ -16,4 +16,5 @@ spec:
         - ports:
             - port: "7379"
   egress:
-     - {} # deny all
+     - toEndpoints:
+         - {} # deny all
