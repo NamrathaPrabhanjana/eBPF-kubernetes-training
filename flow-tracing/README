@@ -1,0 +1,17 @@
+Reference: 
+
+1. Setup a simple tctp flow tracer app in the cluster and observe flows using prometheus
+2. Build container:
+   - docker build . -t flow-tracer:1.0
+   - docker run -u root -v /sys/kernel/debug:/sys/kernel/debug:Z --privileged -it flow-tracer:1.0 # ensure it works
+3. Save ctr in the local repo
+   - docker save flow-tracer:1.0 > flow-tracer_1_0.tar
+   - microk8s ctr image import flow-tracer_1_0.tar
+   - microk8s ctr image ls
+4. Deploy the pods
+   - microk8s kubectl apply -f flow-tracer-deployment.yml
+5. Deploy prometheus
+   - microk8s kubectl apply -f prometheus-deployment.yml
+6. Setup port forwarding
+   - microk8s kubectl port-forward prometheus-65cd6dcbb9-4pkw6 -n monitoring 9090:9090
+7. Observe flows in localhost:9090

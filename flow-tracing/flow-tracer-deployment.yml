@@ -26,12 +26,12 @@ spec:
         prometheus.io/port: '8000'
     spec:
       containers:
-        - name: kube-ebpf
-          image: ghcr.io/mrsupiri/kube-ebpf:latest
+        - name: flow-tracer-ctr
+          image: flow-tracer:1.0
           ports:
             - containerPort: 8000
               name: metrics
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           resources:
             requests:
               ephemeral-storage: "2Gi"
@@ -51,64 +51,25 @@ spec:
             - name: modules-dir
               mountPath: /lib/modules
               readOnly: false
-            - name: linux-headers-generated
-              mountPath: /usr/src/
-              readOnly: false
             - name: debug
               mountPath: /sys/kernel/debug
+              readOnly: false
+            - name: sysfsbpf
+              mountPath: /sys/fs/bpf
               readOnly: false
       hostNetwork: true
       hostPID: true
       serviceAccountName: kube-ebpf
-      initContainers:
-        - name: init-headers
-          image: ghcr.io/mrsupiri/kube-ebpf/init-headers:latest
-          imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
-            capabilities:
-              add: ["SYS_ADMIN"]
-          volumeMounts:
-            - name: lsb-release
-              mountPath: /etc/lsb-release.host
-              readOnly: false
-            - name: os-release
-              mountPath: /etc/os-release.host
-              readOnly: false
-            - name: modules-dir
-              mountPath: /lib/modules
-              readOnly: false
-            - name: modules-host
-              mountPath: /lib/modules.host
-              readOnly: false
-            - name: linux-headers-generated
-              mountPath: /usr/src/
-              readOnly: false
-            - name: boot-host
-              mountPath: /boot.host
-              readOnly: false
       volumes:
-        - name: lsb-release
-          hostPath:
-            path: /etc/lsb-release
-        - name: os-release
-          hostPath:
-            path: /etc/os-release
         - name: modules-dir
-          hostPath:
-            path: /var/cache/linux-headers/modules_dir
-        - name: linux-headers-generated
-          hostPath:
-            path: /var/cache/linux-headers/generated
-        - name: boot-host
-          hostPath:
-            path: /
-        - name: modules-host
           hostPath:
             path: /lib/modules
         - name: debug
           hostPath:
             path: /sys/kernel/debug
+        - name: sysfsbpf
+          hostPath:
+            path: /sys/fs/bpf
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
