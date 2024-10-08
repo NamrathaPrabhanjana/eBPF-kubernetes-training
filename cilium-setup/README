@@ -1,3 +1,7 @@
+Cilium Labs: https://isovalent.com/resource-library/labs/
+https://docs.cilium.io/en/stable/security/policy/language/#policy-examples
+
+
 Test case reference: https://isovalent.com/blog/post/tutorial-cilium-network-policy/#user-story-1-lockdown-the-database-allow-ingress-only-from-the-backend
 
 1. Enable cilium in your k8s cluster:
