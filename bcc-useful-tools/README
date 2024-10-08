@@ -1,0 +1,8 @@
+1. Run the udp container (you could use any other container that we created):
+   - sudo docker run -u root -v /sys/kernel/debug:/sys/kernel/debug:Z --privileged udp-blocker-xdp:1.0 bash
+   - Get another shell: sudo docker exec -it  <ctr-name> bash
+2. cd /bcc/tools
+   - python3 opensnoop.py
+3. Some of the tools you could explore: exitsnoop, runqlat, execsnoop, wakeuptime
+
+	
