@@ -3,6 +3,6 @@
    - Get another shell: sudo docker exec -it  <ctr-name> bash
 2. cd /bcc/tools
    - python3 opensnoop.py
-3. Some of the tools you could explore: exitsnoop, runqlat, execsnoop, wakeuptime
-
+3. Some of the tools you could explore: exitsnoop, runqlat, execsnoop, wakeuptime, tcptop
+4. Each tool has a detailed README attached in the same folder: <tool-name>_example.txt 
 	
