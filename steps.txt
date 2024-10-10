@@ -91,6 +91,10 @@ Run Queue latency detection
 
 Follow README in runq-latency folder
 
+Flow Tracer Setup
+-----------------
+
+Follow README in flow-tracing folder
 
 Cilium Setup
 ------------

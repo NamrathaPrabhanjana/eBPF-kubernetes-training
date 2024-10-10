@@ -15,3 +15,5 @@ Reference: https://medium.com/@isalapiyarisi/getting-started-on-kubernetes-obser
 6. Setup port forwarding
    - microk8s kubectl port-forward prometheus-65cd6dcbb9-4pkw6 -n monitoring 9090:9090
 7. Observe flows in localhost:9090
+
+Also refer: chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://guedou.github.io/talks/2022_cansecwest/slides.pdf
