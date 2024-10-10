@@ -33,6 +33,8 @@ RUN sudo apt install -y linux-tools-$(uname -r)
 RUN sudo apt-get install -y linux-headers-$(uname -r)
 # for bpf-related headers
 RUN sudo apt-get install -y libbpf-dev 
+# clang for executing c programs without python bcc toolkit
+RUN sudo apt-get install -y clang llvm
 
 # Lua JIT
 RUN sudo apt-get install -y luajit luajit-5.1-dev
