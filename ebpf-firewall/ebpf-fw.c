@@ -11,18 +11,22 @@ typedef struct {
 } conn;
 
 /* Map for sending flow information (srcip, dstip, direction) to userspace */
-BPF_QUEUE(flows_map, conn, 10000)
+BPF_QUEUE(flows_map, conn, 64)
 
-/* Map for blocking IP addresses from userspace */
-BPF_HASH(blocked_map, u32, u32, 10000)
+/* Array for blocking IP addresses from userspace */
+BPF_ARRAY(blocked_map, u32, 64)
 
 /* Handle a packet: send its information to userspace and return whether it should be allowed */
-inline bool handle_pkt(struct __sk_buff *skb, bool egress) {
-    struct iphdr iph;
+inline int handle_pkt(struct __sk_buff *skb, int egress) {
+    struct iphdr *iph = (struct iphdr*)(skb->data + sizeof(struct ethhdr));
+    // ensure ip hdr is within packet boundary
+    if ((void *)(iph + 1) > skb->data_end) {
+        return 0;
+    }
     /* Load packet header */
     bpf_skb_load_bytes(skb, 0, &iph, sizeof(struct iphdr));
     /* Check if IPs are in "blocked" map */
-    bool blocked = bpf_map_lookup_elem(&blocked_map, &iph.saddr) || bpf_map_lookup_elem(&blocked_map, &iph.daddr);
+    int blocked = blocked_map.lookup(iph.saddr) || blocked_map.lookup(iph.daddr);
     if (iph.version == 4) {
         conn c = {
             .flags = egress | (blocked << 1),
@@ -39,11 +43,11 @@ inline bool handle_pkt(struct __sk_buff *skb, bool egress) {
 
 /* Ingress hook - handle incoming packets */
 int ingress(struct __sk_buff *skb) {
-    return (int)handle_pkt(skb, false);
+    return (int)handle_pkt(skb, 0);
 }
 
 /* Egress hook - handle outgoing packets */
 int egress(struct __sk_buff *skb) {
-    return (int)handle_pkt(skb, true);
+    return (int)handle_pkt(skb, 1);
 }
 
