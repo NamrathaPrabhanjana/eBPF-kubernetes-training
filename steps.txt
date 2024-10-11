@@ -83,7 +83,7 @@ Follow README in additional-pods-setup folder
 Sample traffic filter/blocker
 ----------------------------
 
-Follow README in udp-blocker-xdp folder
+Follow README in icmp-blocker-xdp folder
 
 
 Run Queue latency detection

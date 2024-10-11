@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: udp-blocker-xdp
+  name: icmp-blocker-xdp
   labels:
-    app: udp-blocker-xdp
+    app: icmp-blocker-xdp
 spec:
   selector:
     matchLabels:
-      name: udp-blocker-xdp
+      name: icmp-blocker-xdp
   template:
     metadata:
       labels:
-        name: udp-blocker-xdp
+        name: icmp-blocker-xdp
     spec:
       containers:
         - name: icmp-blocker-xdp

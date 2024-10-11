@@ -29,11 +29,11 @@ static inline unsigned char lookup_protocol(struct xdp_md *ctx)
     return protocol;
 }
 
-int xdp_udp_blocker(struct xdp_md *ctx)
+int xdp_icmp_blocker(struct xdp_md *ctx)
 {
     unsigned char protocol = lookup_protocol(ctx);
     if (protocol == ICMP_PROTOCOL) {
-        bpf_trace_printk("Dropping UDP packet\n");
+        bpf_trace_printk("Dropping ICMP packet\n");
         return XDP_DROP;
     }
     return XDP_PASS;
