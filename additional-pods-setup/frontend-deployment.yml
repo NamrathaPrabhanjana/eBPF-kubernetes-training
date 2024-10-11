@@ -32,16 +32,15 @@ spec:
   type: ClusterIP
   ports:
   - port: 80
-  type: NodePort
-  selector: 
-    app: demo
-  ports:
-   - protocol: UDP
-     port: 12345 # port internal to cluster
-     targetPort: 12345 # port where the app listens
-     nodePort: 32000 # externally visible port
   selector:
     app: demo
     tier: frontend
-
-
+  type: NodePort
+  selector:
+    app: demo
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080
