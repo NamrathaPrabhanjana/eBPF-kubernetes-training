@@ -17,12 +17,12 @@ def ip_to_int(ip):
 def main(args):
     b = BPF(src_file="ebpf-fw.c")
 
-    fn = b.load_func("ingress", BPF.SCHED_CLS)
+    fn = b.load_func("ingress_fn", BPF.CGROUP_SKB)
     cgroup_fd = open("/sys/fs/cgroup", os.O_RDONLY).fileno()
-    b.attach_cgroup(cgroup_fd, fn, "cgroup_skb/ingress")
+    b.attach_func(fn, cgroup_fd, BPF.CGROUP_INET_INGRESS)
 
-    fn = b.load_func("egress", BPF.SCHED_CLS)
-    b.attach_cgroup(cgroup_fd, fn, "cgroup_skb/egress")
+    fn = b.load_func("egress_fn", BPF.CGROUP_SKB)
+    b.attach_func(fn, cgroup_fd, BPF.CGROUP_INET_EGRESS)
     
     if args.__len__() == 1:
         print("Running the program in the background")
@@ -32,7 +32,7 @@ def main(args):
         index = 0
         for eachip in to_block_list:
             ipaddress = eachip
-            b["blocked_map"][ctypes.c_uint(index)] = ctypes.c_uint(ip_to_int(ipaddress))]       
+            b["blocked_map"][ctypes.c_uint(index)] = ctypes.c_uint(ip_to_int(ipaddress))       
             print("Blocking IP address: " + ipaddress)
             index += 1
     try:

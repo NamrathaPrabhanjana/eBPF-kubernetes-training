@@ -32,7 +32,7 @@ static inline unsigned char lookup_protocol(struct xdp_md *ctx)
 int xdp_udp_blocker(struct xdp_md *ctx)
 {
     unsigned char protocol = lookup_protocol(ctx);
-    if (protocol == UDP_PROTOCOL) {
+    if (protocol == ICMP_PROTOCOL) {
         bpf_trace_printk("Dropping UDP packet\n");
         return XDP_DROP;
     }

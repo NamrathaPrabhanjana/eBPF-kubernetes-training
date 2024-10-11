@@ -11,27 +11,27 @@ typedef struct {
 } conn;
 
 /* Map for sending flow information (srcip, dstip, direction) to userspace */
-BPF_QUEUE(flows_map, conn, 64)
+BPF_QUEUE(flows_map, conn, 64);
 
 /* Array for blocking IP addresses from userspace */
-BPF_ARRAY(blocked_map, u32, 64)
+BPF_ARRAY(blocked_map, u32, 64);
 
 /* Handle a packet: send its information to userspace and return whether it should be allowed */
-inline int handle_pkt(struct __sk_buff *skb, int egress) {
+static int handle_pkt(struct __sk_buff *skb, int egress) {
     struct iphdr *iph = (struct iphdr*)(skb->data + sizeof(struct ethhdr));
     // ensure ip hdr is within packet boundary
-    if ((void *)(iph + 1) > skb->data_end) {
+    if (((void *)(iph) + sizeof(*iph)) > (void*)(long)skb->data_end) {
         return 0;
     }
     /* Load packet header */
-    bpf_skb_load_bytes(skb, 0, &iph, sizeof(struct iphdr));
+    bpf_skb_load_bytes(skb, 0, iph, sizeof(struct iphdr));
     /* Check if IPs are in "blocked" map */
-    int blocked = blocked_map.lookup(iph.saddr) || blocked_map.lookup(iph.daddr);
-    if (iph.version == 4) {
+    int blocked = blocked_map.lookup(&(iph->saddr)) || blocked_map.lookup(&(iph->daddr));
+    if (iph->version == 4) {
         conn c = {
             .flags = egress | (blocked << 1),
-            .srcip = iph.saddr,
-            .dstip = iph.daddr,
+            .srcip = iph->saddr,
+            .dstip = iph->daddr,
         };
 
         /* Send packet info to user program to display */
@@ -42,12 +42,12 @@ inline int handle_pkt(struct __sk_buff *skb, int egress) {
 }
 
 /* Ingress hook - handle incoming packets */
-int ingress(struct __sk_buff *skb) {
+int ingress_fn(struct __sk_buff *skb) {
     return (int)handle_pkt(skb, 0);
 }
 
 /* Egress hook - handle outgoing packets */
-int egress(struct __sk_buff *skb) {
+int egress_fn(struct __sk_buff *skb) {
     return (int)handle_pkt(skb, 1);
 }
 

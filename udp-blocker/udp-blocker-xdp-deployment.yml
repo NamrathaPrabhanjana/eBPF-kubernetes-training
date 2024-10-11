@@ -15,8 +15,8 @@ spec:
         name: udp-blocker-xdp
     spec:
       containers:
-        - name: udp-blocker-xdp
-          image: udp-blocker-xdp:1.0
+        - name: icmp-blocker-xdp
+          image: icmp-blocker:1.0
           imagePullPolicy: Never # always pull from local microk8s repo; without this line, it will connect to dockerhub
           securityContext:
             privileged: true # run ctr in privileged mode for bpf programs to execute

@@ -9,7 +9,7 @@ RUN sudo apt-get install -y libnspr4 libnspr4-dev
 
 WORKDIR /
 
-COPY sslsniffer.py .
+COPY sslsniff.py .
 
 ENTRYPOINT bash
 
