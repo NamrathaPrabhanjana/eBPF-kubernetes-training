@@ -39,6 +39,6 @@ RUN sudo apt-get install -y clang llvm
 # Lua JIT
 RUN sudo apt-get install -y luajit luajit-5.1-dev
 
-RUN sudo apt install -y net-tools conntrack systemd
+RUN sudo apt install -y net-tools conntrack systemd netcat iputils-ping
 
 WORKDIR /
