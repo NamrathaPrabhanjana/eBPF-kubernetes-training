@@ -1,3 +1,4 @@
+https://www.loft.sh/blog/tutorial-how-ebpf-improves-observability-within-kubernetes
 
 - Setup a simple ebpf ddos attck detector to deploy on the kube cluster (from ddos-attck folder)
   - Setup container

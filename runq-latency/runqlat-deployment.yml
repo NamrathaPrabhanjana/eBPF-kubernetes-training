@@ -1,0 +1,47 @@
+
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: runq-latency
+  labels:
+    app: runq-latency
+spec:
+  selector:
+    matchLabels:
+      name: runq-latency
+  template:
+    metadata:
+      labels:
+        name: runq-latency
+    spec:
+      containers:
+        - name: runq-latency
+          image: runqlat:1.0
+          imagePullPolicy: Never # always pull from local microk8s repo; without this line, it will connect to dockerhub
+          securityContext:
+            privileged: true # run ctr in privileged mode for bpf programs to execute
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+            - name: debuglog
+              mountPath: /sys/kernel/debug
+            - name: sysfsbpf
+              mountPath: /sys/fs/bpf
+            - name: libmodules
+              mountPath: /lib/modules
+              # insert run cmd if you wish to
+      volumes:
+        - name: varlog
+          hostPath:
+            path: /var/log # generic kernel logs 
+        - name: debuglog
+          hostPath:
+            path: /sys/kernel/debug # this is needed for tracing
+        - name: sysfsbpf
+          hostPath:
+            path: /sys/fs/bpf # bpf programs mounted here
+        - name: libmodules
+          hostPath:
+            path: /lib/modules # for common kernel headers shared between ctr and host
+
