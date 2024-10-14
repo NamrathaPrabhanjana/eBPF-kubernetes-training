@@ -3,7 +3,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /
 
-COPY runq_latency.py .
-COPY runq_latency.c .
+COPY cpudist.py .
+COPY runqlat.py .
 
-#ENTRYPOINT python3 runq_latency.py
+ENTRYPOINT python3 runqlat.py
