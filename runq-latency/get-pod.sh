@@ -29,7 +29,11 @@ is_running_in_pod=false
 pod=$(nsenter -t $pid -u hostname 2>&1)
 if [ $? -ne 0 ]
 then
+<<<<<<< HEAD
     echo "%s %s:\n %s" "nsenter command failed for pid" "$pid" "$pod"
+=======
+    printf "%s %s:\n %s" "nsenter command failed for pid" "$pid" "$pod"
+>>>>>>> 70c66345ef0eb8bdf016d0140490f5f71e97091a
 fi
 
 cids=$(crictl ps -q)

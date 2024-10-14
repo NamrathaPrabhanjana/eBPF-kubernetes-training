@@ -3,7 +3,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /
 
-COPY runqlat.py .
 COPY cpudist.py .
+COPY runqlat.py .
 
 ENTRYPOINT python3 runqlat.py
