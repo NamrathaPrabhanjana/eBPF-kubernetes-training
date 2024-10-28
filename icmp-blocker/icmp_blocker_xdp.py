@@ -7,7 +7,7 @@ import sys
 from time import sleep
 
 b = BPF(src_file="icmp_blocker_xdp.c")
-interface = "lo"
+interface = "ens160" # common egress intf on my system
 
 # xdp will be hit when a packet arrives on the interface
 fx = b.load_func("xdp_icmp_blocker", BPF.XDP)
@@ -22,4 +22,4 @@ except KeyboardInterrupt:
 except Exception as e:
     print("Hit an exception: ", e)
 
-# Test using 'netcat -u google.com 443'
+

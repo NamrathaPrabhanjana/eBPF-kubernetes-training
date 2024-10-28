@@ -14,6 +14,8 @@
   - Ensure pod is running well
     - microk8s kubectl logs <podname>
     - microk8s kubectl describe pod <podname>
+  - Enter pod with: 
+   - microk8s kubectl exec icmp-blocker-xdp-jh4ns -it -- bash
   - View the attached bpf program and map contents
     - bpftool prog list
     - bpftool prog map dump id <>
@@ -25,4 +27,11 @@
     - microk8s kubectl delete pod <podname>
   - To delete pod (and make it unschedulable again)
     - microk8s kubectl delete -f icmp-blocker-xdp-deployment.yml
+
+The above instructions are for blocking traffic per pod. 
+If you are looking at a generic xdp program whic can block all ping traffic at the host system level, 
+then the program needs to be executed on the host and the xdp program needs to be attached to 
+ens160 interface (on my system)
+
+Test with:  microk8s kubectl exec frontend-5b8647d747-kk62l -it -- ping google.com
 

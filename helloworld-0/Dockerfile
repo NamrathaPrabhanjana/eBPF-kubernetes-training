@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /
 
-COPY helloworld-map.py .
+COPY helloworld.py .
 
-ENTRYPOINT python3 helloworld-map.py
+ENTRYPOINT bash
+#ENTRYPOINT python3 helloworld.py

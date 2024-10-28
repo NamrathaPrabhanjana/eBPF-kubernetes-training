@@ -6,5 +6,6 @@ WORKDIR /
 COPY icmp_blocker_xdp.py .
 COPY icmp_blocker_xdp.c .
 
-ENTRYPOINT python3 icmp_blocker_xdp.py
+#ENTRYPOINT python3 icmp_blocker_xdp.py
 
+ENTRYPOINT bash
