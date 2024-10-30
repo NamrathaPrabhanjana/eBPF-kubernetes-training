@@ -1,0 +1,15 @@
+
+
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: database-policy
+  namespace: default
+spec:
+  endpointSelector:
+    matchLabels:
+      tier: database
+  ingress:
+    - {}
+  egress:
+    - {}

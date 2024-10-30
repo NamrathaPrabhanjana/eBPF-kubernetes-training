@@ -1,20 +1,21 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: database-ingress-policy
+  name: database-policy
   namespace: default
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: database
+      tier: database
   ingress:
     - {}
     - fromEndpoints:
         - matchLabels:
-            app.kubernetes.io/name: backend
+            tier: backend
       toPorts:
         - ports:
             - port: "7379"
   egress:
-     - toEndpoints:
-         - {} # deny all
+    - {}
+
+

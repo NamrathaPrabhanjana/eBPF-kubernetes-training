@@ -19,10 +19,16 @@ Test case reference: https://isovalent.com/blog/post/tutorial-cilium-network-pol
 3. Observe that the database pod is ping-able
    - microk8s kubectl exec backend-667b84d68d-mflfl -- curl -s database/PING
 
-4. Enable ingress-only policy on database pod
-   - microk8s kubectl apply -f database-ingress-only-policy.yml 
+4. Disable all traffic to database pod
+   - microk8s kubectl apply -f database-policy.yml
 
-5. View the cilium objects hoooked to each attachment point
+5. Enable traffic from backend pod only on database pod
+   - microk8s kubectl apply -f database-allow-backend-policy.yml
+
+6. View the resource created
+   - microk8s kubectl get cnp
+
+7. View the cilium objects hoooked to each attachment point
    - microk8s kubectl -n kube-system exec cilium-92mjm -it -- bpftool net list
    - microk8s kubectl -n kube-system exec cilium-92mjm -it -- bpftool net show dev cilium_vxlan
 
