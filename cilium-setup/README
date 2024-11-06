@@ -32,3 +32,6 @@ Test case reference: https://isovalent.com/blog/post/tutorial-cilium-network-pol
    - microk8s kubectl -n kube-system exec cilium-92mjm -it -- bpftool net list
    - microk8s kubectl -n kube-system exec cilium-92mjm -it -- bpftool net show dev cilium_vxlan
 
+8. Check routing policy (legacy indicates iptables are being used)
+   - microk8s kubectl -n kube-system exec cilium-92mjm -it -c cilium-agent sh
+   - from within the container: cilium status

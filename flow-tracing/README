@@ -17,3 +17,10 @@ Reference: https://medium.com/@isalapiyarisi/getting-started-on-kubernetes-obser
 7. Observe flows in localhost:9090
 
 Also refer: chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://guedou.github.io/talks/2022_cansecwest/slides.pdf
+
+Create a temporary TCP server
+
+1. sudo apt install ncat
+2. ncat -l 8887 -k -c "printf 'TCP dummy server'"
+3. nc localhost 8887
+
